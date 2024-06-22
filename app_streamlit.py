@@ -1,10 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
-from PIL import Image
-import altair as alt
-import streamlit as st
-import pandas as pd
 
 # Cargar archivos CSV
 train_df = pd.read_csv('./Project/train.csv')
@@ -36,14 +31,14 @@ st.header('Filtrar Datos')
 
 # Filtrar por columna en el dataset de entrenamiento
 column_train = st.selectbox('Selecciona una columna para filtrar en el dataset de entrenamiento', train_df.columns)
-value_train = st.text_input(f'Introduce un valor para filtrar en la columna {column_train}')
+value_train = st.text_input(f'Introduce un valor para filtrar en la columna {column_train}', key='value_train')
 if value_train:
     filtered_train_df = train_df[train_df[column_train].astype(str).str.contains(value_train, na=False)]
     st.write(filtered_train_df)
 
 # Filtrar por columna en el dataset de sumisión
 column_submission = st.selectbox('Selecciona una columna para filtrar en el dataset de sumisión', submission_df.columns)
-value_submission = st.text_input(f'Introduce un valor para filtrar en la columna {column_submission}')
+value_submission = st.text_input(f'Introduce un valor para filtrar en la columna {column_submission}', key='value_submission')
 if value_submission:
     filtered_submission_df = submission_df[submission_df[column_submission].astype(str).str.contains(value_submission, na=False)]
     st.write(filtered_submission_df)
