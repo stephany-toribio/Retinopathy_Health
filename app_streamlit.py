@@ -3,113 +3,53 @@ import pandas as pd
 import numpy as np
 from PIL import Image
 import altair as alt
+import streamlit as st
+import pandas as pd
 
-titulos_pestanas = ['Página principal', 'Nacional', 'Internacional','Departamentos','Países','Sobre nosotras']
-pestaña1, pestaña2, pestaña3, pestaña4, pestaña5, pestaña6 = st.tabs(titulos_pestanas)
+# Cargar archivos CSV
+train_df = pd.read_csv('/mnt/data/train.csv')
+submission_df = pd.read_csv('/mnt/data/submissionDR (1).csv')
 
-with pestaña1:
-    st.title('Análisis de Población identificada con DNI de mayor de edad por condición de donante de órganos')
-    st.write("Texto sobre donación de órganos")
-    st.write("")
-    with st.container():
-        left_column, right_column = st.columns(2)
-        with left_column:
-            st.button("Nacional", type="secondary")
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-        with right_column:
-            st.button("Internacional", type="secondary") 
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-            st.caption('Los datos de este gráfico no están actualizados a la fecha actual.')
+# Título de la aplicación
+st.title('Visualización de la Base de Datos de Retinopatía')
 
-with pestaña2:
-    st.title("Condición de donante de órganos a nivel nacional")
-    with st.container():
-        left_column, right_column = st.columns(2)
-        with left_column:
-            st.button("2022", type="secondary")
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-        with right_column:
-            st.button("2023", type="secondary")
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-            st.caption("Los datos de este gráfico no están actualizados a la fecha actual.")
+# Mostrar el DataFrame de entrenamiento
+st.header('Datos de Entrenamiento')
+st.write(train_df)
 
-with pestaña3:
-    st.title ("Condición de donante de órganos a nivel internacional")
-    with st.container():
-        left_column, right_column = st.columns(2)
-        with left_column:
-            st.button(" 2022", type="secondary")
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-        with right_column:
-            st.button(" 2023", type="secondary")
-            chart_data = pd.DataFrame(np.random.randn(20, 3), columns=["a", "b", "c"])
-            st.bar_chart(chart_data)
-            st.caption("Los datos de este gráfico no están actualizados a la fecha actual.")
+# Mostrar el DataFrame de sumisión
+st.header('Datos de Sumisión')
+st.write(submission_df)
 
-with pestaña4:
-    st.title("Condición de donante de órganos por departamentos")
-    option0 = st.selectbox(
-        "Elige un año",
-        ("2022","2023"))
-    if option0 == "2022":
-        lista1 = ["Áncash","Amazonas","Apurímac","Arequipa","Ayacucho","Cajamarca","Callao","Cusco","Huancavelica","Huánuco","Ica","Junín","La Libertad","Lambayeque","Lima","Loreto","Madre de Dios","Moquegua","Pasco","Piura","Puno","San Martín","Tacna","Tumbes","Ucayali"]
-        lista2 = [437356,47620,60638,560103,97159,188313,157847,190839,26419,57707,95206,58440,186959,110010,1575708,41149,20438,18486,14127,134095,38182,51936,27444,16078,40806]
-        chart_data = pd.DataFrame(
-            {"Departamento": list(lista1[0:25]), "Cantidad": list(lista2[0:25])}
-        )
-        st.bar_chart(
-            chart_data, x="Departamento", y=["Cantidad"]
-        )
-        st.write("")
-        st.write("El gráfico muestra la cantidad de personas que aceptaron donar sus órganos durante el año 2022.")
-    elif option0 == "2023":
-        lista1 = ["Áncash","Amazonas","Apurímac","Arequipa","Ayacucho","Cajamarca","Callao","Cusco","Huancavelica","Huánuco","Ica","Junín","La Libertad","Lambayeque","Lima","Loreto","Madre de Dios","Moquegua","Pasco","Piura","Puno","San Martín","Tacna","Tumbes","Ucayali"]        
-        lista2 = [32613,12022,13986,26109,19263,25839,2646,28163,14731,17237,14224,23653,23706,12892,42111,12726,3489,4660,7607,19516,20609,20922,5834,4272,5693,32613,5693]
-        chart_data = pd.DataFrame(
-            {"Departamento": list(lista1[0:25]), "Cantidad": list(lista2[0:25])}
-        )
-        st.bar_chart(
-            chart_data, x="Departamento", y=["Cantidad"]
-        )
-        st.caption("Los datos de este gráfico no están actualizados a la fecha actual.")
-        st.write("")
-        st.write("El gráfico muestra la cantidad de personas que aceptaron donar sus órganos durante el año 2023.")
+# Opciones adicionales de visualización
+st.header('Opciones Adicionales')
 
-with pestaña5:
-    st.title("Condición de donante de órganos por países")
-    option3 = st.selectbox(
-        "Elige un continente",
-        ("África","América","Asia","Europa","Oceanía"))
-    if option3 == "África":
-        option5 = st.selectbox(
-                "Elige un país",
-                ("Argelia","Costa de Marfil"))
-    elif option3 == "América":
-        option5 = st.selectbox(
-            "Elige un país",
-            ("Antillas Holandesas","Argentina"))
-    elif option3 == "Asia":
-        option5 = st.selectbox(
-            "Elige un país",
-            ("Catar","India"))
-    elif option3 == "Europa":
-        option5 = st.selectbox(
-            "ELige un país",
-            ("Alemania","Austria"))
-    elif option3 == "Oceanía":
-        option5 = st.selectbox(
-            "Elige un país",
-            ("Australia","Nueva Zelanda"))
-    option4 = st.selectbox(
-        "Elige un año",
-        (" 2022","2023"))
+# Mostrar estadísticas descriptivas
+if st.checkbox('Mostrar estadísticas descriptivas de entrenamiento'):
+    st.write(train_df.describe())
 
-with pestaña6:
-    st.title("Sobre nosotras")
+if st.checkbox('Mostrar estadísticas descriptivas de sumisión'):
+    st.write(submission_df.describe())
 
-st.link_button("Para más información de click aquí", "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-de-mayor-de-edad-por-condici%C3%B3n-de-donante-de-%C3%B3rganos")
+# Filtros por columnas
+st.header('Filtrar Datos')
+
+# Filtrar por columna en el dataset de entrenamiento
+column_train = st.selectbox('Selecciona una columna para filtrar en el dataset de entrenamiento', train_df.columns)
+value_train = st.text_input(f'Introduce un valor para filtrar en la columna {column_train}')
+if value_train:
+    filtered_train_df = train_df[train_df[column_train].astype(str).str.contains(value_train, na=False)]
+    st.write(filtered_train_df)
+
+# Filtrar por columna en el dataset de sumisión
+column_submission = st.selectbox('Selecciona una columna para filtrar en el dataset de sumisión', submission_df.columns)
+value_submission = st.text_input(f'Introduce un valor para filtrar en la columna {column_submission}')
+if value_submission:
+    filtered_submission_df = submission_df[submission_df[column_submission].astype(str).str.contains(value_submission, na=False)]
+    st.write(filtered_submission_df)
+
+# Ejecutar la aplicación en Streamlit
+if __name__ == '__main__':
+    st.set_option('deprecation.showfileUploaderEncoding', False)
+    st.title('Visualización de la Base de Datos de Retinopatía')
+    st.write('Carga tus archivos CSV para visualizarlos.')
