@@ -7,8 +7,8 @@ import streamlit as st
 import pandas as pd
 
 # Cargar archivos CSV
-train_df = pd.read_csv('/mnt/data/train.csv')
-submission_df = pd.read_csv('/mnt/data/submissionDR (1).csv')
+train_df = pd.read_csv('./project/train.csv')
+submission_df = pd.read_csv('./project/submissionDR.csv')
 
 # Título de la aplicación
 st.title('Visualización de la Base de Datos de Retinopatía')
