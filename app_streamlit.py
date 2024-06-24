@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 
+# Títulos de las pestañas
 titulos_pestanas = ['Página principal', 'Datos de entrenamiento', 'Datos de Submission','Sobre nosotras']
 pestaña1, pestaña2, pestaña3, pestaña4 = st.tabs(titulos_pestanas)
 
@@ -20,77 +21,48 @@ with pestaña1:
     st.write("  A medida que avanza, pueden aparecer síntomas en el ojo diabético que no deben ignorarse.")
     st.write("En resumen, detectar y tratar la retinopatía diabética a tiempo es fundamental para preservar la visión.")
     st.write("Si tienes diabetes, consulta con un especialista en oftalmología para evaluar tu salud ocular.")
-    st.write("")
-    with st.container():
-        left_column, right_column = st.columns(2)
-        with left_column:
-            st.button("train", type="secondary")
-            train_df = pd.read_csv('./Project/train.csv')
-            st.header('Datos de Entrenamiento')
-            st.write(train_df)
-            st.title('Visualización de la Base de Datos de Train de Retinopatía')
-            st.bar_chart(train_df)
-            st.header('Opciones Adicionales')
-            st.header('Opciones Adicionales')
-            st.title('Visualización de la Base de Datos de Retinopatía')
 
-            if st.checkbox('Mostrar estadísticas descriptivas de entrenamiento'):
-                st.write(train_df.describe())
-
-        with right_column:
-            st.button("Predicciones", type="secondary") 
-            submission_df = pd.read_csv('./Project/submissionDR.csv')
-            st.header('Datos predictivos')
-            st.write(submission_df)
-            st.bar_chart(chart_data)
-            st.header('Opciones adicionales')
-     # Título de la aplicación
-            st.title('Visualización de la Base de Datos de Retinopatía')
-
-
-            if st.checkbox('Mostrar estadísticas descriptivas de las predicciones'):
-                st.write(submission_df.describe())
 with pestaña2:
-        with st.container():
+    st.header('Datos de Entrenamiento')
+    train_df = pd.read_csv.write(train_df)
+    
 
-# Cargar archivos CSV
-            train_df = pd.read_csv('./Project/train.csv')
+    st.bar_chart(train_df)
+    if st.checkbox('Mostrar estadísticas descriptivas de entrenamiento'):
+        st.write(train_df.describe())
+    
+    st.header('Filtrar Datos')
+    column_train = st.selectbox('Selecciona una columna para filtrar en el dataset de entrenamiento', train_df.columns)
+    value_train = st.text_input(f'Introduce un valor para filtrar en la columna {column_train}', key='value_train')
+    if value_train:
+        filtered_train_df = train_df[train_df[column_train].astype(str).str.contains(value_train, na=False)]
+        st.write(filtered_train_df)
 
-
-
-# Filtros por columnas
-st.header('Filtrar Datos')
-#datos de entrenamiento 
-with pestaña2:
-        with st.container():
-# Filtrar por columna en el dataset de entrenamiento
-            column_train = st.selectbox('Selecciona una columna para filtrar en el dataset de entrenamiento', train_df.columns)
-            value_train = st.text_input(f'Introduce un valor para filtrar en la columna {column_train}', key='value_train')
-            if value_train:
-                filtered_train_df = train_df[train_df[column_train].astype(str).str.contains(value_train, na=False)]
-                st.write(filtered_train_df)
-# temática predicciones 
 with pestaña3:
-        with st.container():
+    st.header('Datos de Submission')
+    submission_df = pd.read_csv('/mnt/data/submissionDR (1).csv')
+    st.write(submission_df)
+    st.bar_chart(submission_df)
+    if st.checkbox('Mostrar estadísticas descriptivas de submission'):
+        st.write(submission_df.describe())
+    
+    st.header('Filtrar Datos')
+    column_submission = st.selectbox('Selecciona una columna para filtrar en el dataset de submission', submission_df.columns)
+    value_submission = st.text_input(f'Introduce un valor para filtrar en la columna {column_submission}', key='value_submission')
+    if value_submission:
+        filtered_submission_df = submission_df[submission_df[column_submission].astype(str).str.contains(value_submission, na=False)]
+        st.write(filtered_submission_df)
 
-# Cargar archivos CSV
-            submission_df = pd.read_csv('./Project/submissionDR.csv')
-# Filtrar por columna en el dataset de submisión
-            column_submission = st.selectbox('Selecciona una columna para filtrar en el dataset de submisión', submission_df.columns)
-            value_submission = st.text_input(f'Introduce un valor para filtrar en la columna {column_submission}', key='value_submission')
-            if value_submission:
-                filtered_submission_df = submission_df[submission_df[column_submission].astype(str).str.contains(value_submission, na=False)]
-                st.write(filtered_submission_df)
 with pestaña4:
     st.title("Sobre nosotras")
-    st.image("./nosotras/intro.pdf")
-st.link_button("Para más información de click aquí", "https://www.kaggle.com/competitions/upch-intro-ml")
+    st.write("Información sobre nosotras.")
+    st.image("/mnt/data/intro.png")  # Cambia esto por una ruta válida a la imagen
+    st.write("[Para más información de click aquí](https://www.kaggle.com/competitions/upch-intro-ml)")
+
 # Ejecutar la aplicación en Streamlit
 if __name__ == '__main__':
     st.set_option('deprecation.showfileUploaderEncoding', False)
     st.title('Visualización de la Base de Datos de Retinopatía')
     st.write('Carga tus archivos CSV para visualizarlos.')
-
-streamlit run app_streamlit.py
 
 
