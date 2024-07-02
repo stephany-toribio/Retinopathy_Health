@@ -1,7 +1,6 @@
-streamlit
 numpy
-pandas
-keras
-tensorflow
+streamlit
+opencv-python
 Pillow
-urllib3
+keras==3.3.3
+tensorflow==2.16.1
